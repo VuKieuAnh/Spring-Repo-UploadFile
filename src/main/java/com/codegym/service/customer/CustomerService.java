@@ -1,5 +1,6 @@
 package com.codegym.service.customer;
 
+import com.codegym.exception.CustomerNotFound;
 import com.codegym.model.Customer;
 import com.codegym.repo.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,11 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Optional<Customer> findById(Long id) {
-        return customerRepository.findById(id);
+    public Optional<Customer> findById(Long id) throws CustomerNotFound {
+        Optional<Customer> customer = customerRepository.findById(id);
+        if (customer.isPresent()) return customer;
+        throw new CustomerNotFound();
+
     }
 
     @Override

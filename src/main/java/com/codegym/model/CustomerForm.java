@@ -1,12 +1,22 @@
 package com.codegym.model;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 
 public class CustomerForm {
     private Long id;
+    @NotBlank(message = "Khong dc de trong")
+    @Size(min = 1, message = "Do dai >1 ")
     private String firstName;
+    @NotBlank
+    @Size(min = 1)
     private String lastName;
+
+
     private Province province;
     private MultipartFile avatar;
 

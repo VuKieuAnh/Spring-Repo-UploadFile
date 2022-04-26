@@ -1,5 +1,6 @@
 package com.codegym.config;
 
+import com.codegym.aspect.MyLogger;
 import com.codegym.formater.ProvinceFormatter;
 import com.codegym.service.customer.CustomerService;
 import com.codegym.service.customer.ICustomerService;
@@ -9,10 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -43,6 +41,7 @@ import java.util.Properties;
 @ComponentScan("com.codegym")
 @EnableJpaRepositories("com.codegym.repo")
 @PropertySource("classpath:upload_file.properties")
+@EnableAspectJAutoProxy
 public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
@@ -146,5 +145,10 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
         resolver.setMaxUploadSizePerFile(52428800);
         return resolver;
+    }
+
+    @Bean
+    public MyLogger myLogger(){
+        return new MyLogger();
     }
 }
