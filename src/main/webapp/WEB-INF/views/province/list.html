@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+<script>
+    function addProvince() {
+        //lay du lieu
+        // let name = document.getElementById("provinceName").value;
+        let nameProvince = $('#provinceName').val();
+        // tao moi doi tuong
+        let newProvince = {
+            name: nameProvince
+        }
+        //chuyen du lieu sang JSON
+        let newProvinceJson = JSON.stringify(newProvince);
+        //goi api tao moi
+        $.ajax({
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            //method
+            type:"POST",
+            //du lieu gui len
+            data: newProvinceJson,
+            //ten API
+            url: "http://localhost:8080/province",
+            success: function (){
+                showListProvince();
+                alert("Tao moi thanh cong");
+                $('#provinceName').val = "";
+            }
+
+        });
+
+        //chan su kien mac dinh cua the
+        event.preventDefault();
+    }
+    function showListProvince(){
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/province",
+            //ket qua cua loi goi API se ve bien trong ngoac province
+            success: function (provinces) {
+                let content = '<tr>\n' +
+                    '        <td>id</td>\n' +
+                    '        <td>name</td>\n' +
+                    '    </tr>';
+                for (let i = 0; i < provinces.length; i++) {
+                    content+=`<tr>
+            <td>${provinces[i].id}</td>
+            <td>${provinces[i].name}</td>
+        </tr>`;
+                }
+                document.getElementById("list").innerHTML = content;
+            }
+        });
+    }
+</script>
+
+<h1>Danh sach cac tinh</h1>
+<form>
+    <input name="provinceName"  id="provinceName">
+    <input type="submit" th:value="create" onclick="addProvince()">
+</form>
+
+<table id = "list">
+    <tr>
+        <td>id</td>
+        <td>name</td>
+    </tr>
+    <th:block th:each="p:${provinces}">
+        <tr>
+            <td th:text="${p.id}"></td>
+            <td th:text="${p.name}"></td>
+        </tr>
+    </th:block>
+</table>
+
+</body>
+</html>
