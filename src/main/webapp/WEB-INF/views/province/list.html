@@ -6,6 +6,30 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 <body>
+
+
+<h1>Danh sach cac tinh</h1>
+<form>
+    <input name="provinceName"  id="provinceName">
+    <input type="submit" th:value="create" onclick="addProvince()">
+</form>
+
+<table id = "list">
+    <tr>
+        <td>id</td>
+        <td>name</td>
+        <td>Action</td>
+    </tr>
+    <th:block th:each="p:${provinces}">
+        <tr>
+            <td th:text="${p.id}"></td>
+            <td th:text="${p.name}"></td>
+            <td>
+                <a class="deleteProvince" onclick="deleteProvince(this)" th:href="${p.getId()}">Xoa</a>
+            </td>
+        </tr>
+    </th:block>
+</table>
 <script>
     function addProvince() {
         //lay du lieu
@@ -49,37 +73,52 @@
                 let content = '<tr>\n' +
                     '        <td>id</td>\n' +
                     '        <td>name</td>\n' +
+                    '        <td>action</td>\n' +
                     '    </tr>';
                 for (let i = 0; i < provinces.length; i++) {
                     content+=`<tr>
             <td>${provinces[i].id}</td>
             <td>${provinces[i].name}</td>
+            <td>
+               <a href="${provinces[i].id}" onclick="deleteProvince(this)" class="deleteProvince">Xoa</a>
+</td>
         </tr>`;
                 }
                 document.getElementById("list").innerHTML = content;
             }
         });
     }
+    // $(document).ready(function () {
+    //     $(".deleteProvince").click(function (event) {
+    //         let a = $(this);
+    //         let provinceId = a.attr("href");
+    //         $.ajax({
+    //             type:"DELETE",
+    //             // url: "/customers/"+customerId,
+    //             url: `/province/${provinceId}`,
+    //             success: function () {
+    //                 a.parent().parent().remove();
+    //             }
+    //
+    //         })
+    //         event.preventDefault();
+    //     })
+    // })
+    function deleteProvince(element){
+        // let a = $(this);
+        let provinceId = element.getAttribute("href");
+        $.ajax({
+            type:"DELETE",
+            // url: "/customers/"+customerId,
+            url: `/province/${provinceId}`,
+            // success: function () {
+            //     element.parentElement.parentElement.remove();
+            // }
+            success: showListProvince
+
+        })
+        event.preventDefault();
+    }
 </script>
-
-<h1>Danh sach cac tinh</h1>
-<form>
-    <input name="provinceName"  id="provinceName">
-    <input type="submit" th:value="create" onclick="addProvince()">
-</form>
-
-<table id = "list">
-    <tr>
-        <td>id</td>
-        <td>name</td>
-    </tr>
-    <th:block th:each="p:${provinces}">
-        <tr>
-            <td th:text="${p.id}"></td>
-            <td th:text="${p.name}"></td>
-        </tr>
-    </th:block>
-</table>
-
 </body>
 </html>
