@@ -17,7 +17,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Iterable<Customer> findAll() {
-        return customerRepository.findAll();
+        return customerRepository.findAllByFirstNameIsContainingOrLastNameContaining("K", "A");
     }
 
     @Override

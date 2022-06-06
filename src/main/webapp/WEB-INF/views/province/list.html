@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -15,20 +16,20 @@
 </form>
 
 <table id = "list">
-    <tr>
-        <td>id</td>
-        <td>name</td>
-        <td>Action</td>
-    </tr>
-    <th:block th:each="p:${provinces}">
-        <tr>
-            <td th:text="${p.id}"></td>
-            <td th:text="${p.name}"></td>
-            <td>
-                <a class="deleteProvince" onclick="deleteProvince(this)" th:href="${p.getId()}">Xoa</a>
-            </td>
-        </tr>
-    </th:block>
+<!--    <tr>-->
+<!--        <td>id</td>-->
+<!--        <td>name</td>-->
+<!--        <td>Action</td>-->
+<!--    </tr>-->
+<!--    <th:block th:each="p:${provinces}">-->
+<!--        <tr>-->
+<!--            <td th:text="${p.id}"></td>-->
+<!--            <td th:text="${p.name}"></td>-->
+<!--            <td>-->
+<!--                <a class="deleteProvince" onclick="deleteProvince(this)" th:href="${p.getId()}">Xoa</a>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--    </th:block>-->
 </table>
 <script>
     function addProvince() {
@@ -119,6 +120,7 @@
         })
         event.preventDefault();
     }
+    showListProvince();
 </script>
 </body>
 </html>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/customers")
+@CrossOrigin("*")
 public class CustomerController {
     @Autowired
     private ICustomerService customerService;

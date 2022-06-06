@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("/province")
+@CrossOrigin("*")
 public class ProvinceController {
 
     @Autowired
