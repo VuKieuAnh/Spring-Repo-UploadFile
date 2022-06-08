@@ -66,7 +66,7 @@ public class DemoController {
     }
 
     @PostMapping("/create")
-    public ModelAndView createNewCustomer(@Validated @ModelAttribute("customer") CustomerForm customerForm,BindingResult bindingResult){
+    public ModelAndView createNewCustomer(@Validated @ModelAttribute("customer") CustomerForm customerForm,BindingResult bindingResult) throws IOException {
         if (!bindingResult.hasErrors()){
 
             //lay file anh
@@ -80,11 +80,11 @@ public class DemoController {
             Province province = customerForm.getProvince();
 
             //coppy file
-            try {
+//            try {
                 FileCopyUtils.copy(file.getBytes(), new File(fileUpload+ fileName));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
             Customer customer = new Customer(name,lastName, fileName, province);
 
